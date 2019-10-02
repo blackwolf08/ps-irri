@@ -1,26 +1,106 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  state = {
+    btn1: 'display',
+    btn2: 'display',
+    btn3: 'display',
+    content: 'no-display',
+    title: null
+  };
 
-export default App;
+  handleClick = btn => {
+    if (btn === 1) {
+      this.setState({
+        btn1: 'display',
+        btn2: 'no-display',
+        btn3: 'no-display',
+        title: 'Crop Suggestion',
+        content: 'display'
+      });
+    }
+    if (btn === 2) {
+      this.setState({
+        btn1: 'no-display',
+        btn2: 'display',
+        btn3: 'no-display',
+        title: 'Check Condition',
+        content: 'display'
+      });
+    }
+    if (btn === 3) {
+      this.setState({
+        btn1: 'no-display',
+        btn2: 'no-display',
+        btn3: 'display green',
+        title: 'Irrigate Crops',
+        content: 'display'
+      });
+    }
+  };
+
+  handleBack = () => {
+    this.setState({
+      btn1: 'display',
+      btn2: 'display',
+      btn3: 'display',
+      content: 'no-display',
+      title: null
+    });
+  };
+
+  render() {
+    return (
+      <div className='root'>
+        <button onClick={this.handleBack} className='back'>
+          <i class='fas fa-arrow-left'></i>
+        </button>
+        <nav>
+          <h3>Smart Irrigation</h3>
+        </nav>
+        <div className='box'>
+          <button
+            onClick={() => {
+              this.handleClick(1);
+            }}
+            className={`btn ${this.state.btn1}`}
+          >
+            Crop Suggestion
+          </button>
+          <button
+            onClick={() => {
+              this.handleClick(2);
+            }}
+            className={`btn ${this.state.btn2}`}
+          >
+            Check Condition
+          </button>
+          <button
+            onClick={() => {
+              this.handleClick(3);
+            }}
+            className={`btn ${this.state.btn3}`}
+          >
+            Irrigate Crops
+          </button>
+          {this.state.btn3 === 'no-display' && (
+            <div className={`box1 no-display ${this.state.content}`}>
+              <h1 className='h1'>{this.state.title}</h1>
+              {this.state.btn1 === 'display' && (
+                <div>
+                  <p>data</p>
+                </div>
+              )}
+              {this.state.btn2 === 'display' && (
+                <div>
+                  <p>data</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+}
